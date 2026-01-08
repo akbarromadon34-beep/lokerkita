@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LokerKita - Portal Lowongan Kerja Seluruh Indonesia</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+                    colors: {
+                        brand: { 50:'#f0fdfa', 100:'#ccfbf1', 500:'#14b8a6', 600:'#0d9488', 700:'#0f766e', 800:'#115e59', 900:'#134e4a' }
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(0,0,0,0.08)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Dropdown Animation */
+        .dropdown-enter { opacity: 0; transform: scale(0.95) translateY(-10px); }
+        .dropdown-enter-active { opacity: 1; transform: scale(1) translateY(0); transition: opacity 0.2s ease-out, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .dropdown-exit { opacity: 1; transform: scale(1) translateY(0); }
+        .dropdown-exit-active { opacity: 0; transform: scale(0.95) translateY(-10px); transition: opacity 0.15s ease-in, transform 0.15s ease-in; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 font-sans flex flex-col min-h-screen" onclick="closeAllDropdowns(event)">
+
+    <!-- NAVBAR -->
+    <nav class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 bg-gradient-to-br from-brand-500 to-brand-700 rounded-lg flex items-center justify-center text-white font-bold text-2xl shadow-lg shadow-brand-500/30 group-hover:scale-105 transition transform duration-200">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-2xl tracking-tight text-gray-900 dark:text-white leading-none">Loker<span class="text-brand-600">Kita</span></h1>
+                        <p class="text-xs text-gray-500 uppercase tracking-widest font-bold mt-1">Portal Karir No. 1</p>
+                    </div>
+                </a>
+                <div class="hidden md:flex items-center space-x-8 text-base font-semibold">
+                    <a href="index.html" class="text-brand-600 hover:text-brand-700 transition">Beranda</a>
+                    <a href="tips.html" class="text-gray-500 hover:text-brand-600 dark:text-gray-300 dark:hover:text-brand-400 transition">Tips Karir</a>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 transition">
+                        <i class="fas fa-moon" id="theme-icon"></i>
+                    </button>
+                    <!-- Tombol Pasang Lowongan dengan Link Email -->
+                    <a href="mailto:admin@lokerkita.com?subject=Pasang%20Lowongan%20Kerja&body=Halo%20Admin%20LokerKita,%0A%0ASaya%20ingin%20memasang%20info%20lowongan%20kerja%20di%20website%20Anda.%0AMohon%20infonya.%0A%0ATerima%20kasih." class="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-6 py-3 rounded-full text-sm font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition duration-200">
+                        Pasang Lowongan
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SEARCH SECTION -->
+    <div class="relative bg-brand-900">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-50 dark:from-gray-900 to-transparent z-10"></div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 py-16 md:py-24 flex flex-col items-center text-center z-20">
+            <h2 class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight tracking-tight">
+                Temukan Karir Impianmu
+            </h2>
+            <p class="text-brand-100 text-lg md:text-xl mb-12 max-w-2xl font-medium opacity-90">
+                Ribuan lowongan kerja terpercaya. Update setiap hari.
+            </p>
+
+            <!-- SEARCH BAR BOX -->
+            <div class="w-full max-w-6xl bg-white dark:bg-gray-800 p-2 md:p-4 rounded-2xl shadow-soft flex flex-col lg:flex-row gap-4 relative z-30">
+                <!-- Keyword Input -->
+                <div class="flex-[1.4] flex items-center px-5 bg-gray-50 dark:bg-gray-700/50 rounded-xl border-2 border-transparent focus-within:border-brand-500 h-20">
+                    <div class="w-12 h-12 rounded-full bg-brand-50 dark:bg-gray-600 flex items-center justify-center text-brand-600 dark:text-brand-300 mr-4 flex-shrink-0 text-xl"><i class="fas fa-search"></i></div>
+                    <div class="w-full">
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wide mb-1">Kata Kunci</label>
+                        <input type="text" id="searchInput" onkeyup="resetPaginationAndFilter()" placeholder="Posisi, perusahaan..." class="w-full bg-transparent outline-none text-gray-800 dark:text-white font-bold text-lg md:text-xl truncate">
+                    </div>
+                </div>
+
+                <!-- Category Dropdown -->
+                <div class="flex-1 relative group h-20 bg-gray-50 dark:bg-gray-700/50 rounded-xl border-2 border-transparent hover:border-brand-200 dropdown-container" id="categoryContainer">
+                    <div class="absolute inset-0 flex items-center px-5 cursor-pointer" onclick="toggleDropdown('category')">
+                        <div class="w-12 h-12 rounded-full bg-orange-50 dark:bg-gray-600 flex items-center justify-center text-orange-500 dark:text-orange-300 mr-4 flex-shrink-0 text-xl"><i class="fas fa-briefcase"></i></div>
+                        <div class="w-full overflow-hidden">
+                             <label class="block text-xs font-bold text-gray-400 uppercase tracking-wide mb-1 cursor-pointer">Kategori</label>
+                             <div id="categoryDisplay" class="font-bold text-gray-800 dark:text-white text-lg md:text-xl truncate select-none">Semua Kategori</div>
+                             <input type="hidden" id="categoryInput" value="">
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 ml-2" id="categoryChevron"></i>
+                    </div>
+                    <div id="categoryMenu" class="hidden absolute top-[calc(100%+8px)] left-0 right-0 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 z-50 overflow-hidden">
+                        <div class="max-h-80 overflow-y-auto p-2 custom-scrollbar">
+                            <div onclick="selectOption('category', '', 'Semua Kategori')" class="p-3 hover:bg-brand-50 cursor-pointer font-bold flex gap-3 text-gray-700">Semua Kategori</div>
+                            <div class="px-3 py-2 text-xs font-bold text-gray-400 uppercase tracking-wider mt-1">Populer</div>
+                            <div onclick="selectOption('category', 'Admin', 'Admin & HRD')" class="p-3 hover:bg-brand-50 cursor-pointer flex gap-3 text-gray-600">Admin & HRD</div>
+                            <div onclick="selectOption('category', 'Marketing', 'Marketing & Sales')" class="p-3 hover:bg-brand-50 cursor-pointer flex gap-3 text-gray-600">Marketing & Sales</div>
+                            <div onclick="selectOption('category', 'Manufaktur', 'Manufaktur & Pabrik')" class="p-3 hover:bg-brand-50 cursor-pointer flex gap-3 text-gray-600">Manufaktur & Pabrik</div>
+                            <!-- Add more as needed -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Location Dropdown -->
+                <div class="flex-1 relative group h-20 bg-gray-50 dark:bg-gray-700/50 rounded-xl border-2 border-transparent hover:border-brand-200 dropdown-container" id="locationContainer">
+                    <div class="absolute inset-0 flex items-center px-5 cursor-pointer" onclick="toggleDropdown('location')">
+                        <div class="w-12 h-12 rounded-full bg-red-50 dark:bg-gray-600 flex items-center justify-center text-red-500 dark:text-red-300 mr-4 flex-shrink-0 text-xl"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="w-full overflow-hidden">
+                             <label class="block text-xs font-bold text-gray-400 uppercase tracking-wide mb-1 cursor-pointer">Lokasi</label>
+                             <div id="locationDisplay" class="font-bold text-gray-800 dark:text-white text-lg md:text-xl truncate select-none">Seluruh Indonesia</div>
+                             <input type="hidden" id="locationInput" value="">
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 ml-2" id="locationChevron"></i>
+                    </div>
+                    <div id="locationMenu" class="hidden absolute top-[calc(100%+8px)] left-0 right-0 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 z-50 overflow-hidden">
+                        <div class="max-h-80 overflow-y-auto p-2 custom-scrollbar">
+                            <div onclick="selectOption('location', '', 'Seluruh Indonesia')" class="p-3 hover:bg-brand-50 cursor-pointer font-bold text-gray-700">Seluruh Indonesia</div>
+                            <div class="px-3 py-2 text-xs font-bold text-gray-400 uppercase tracking-wider mt-1">Kota Besar</div>
+                            <div onclick="selectOption('location', 'Jakarta', 'Jakarta')" class="p-3 hover:bg-brand-50 cursor-pointer text-gray-600">Jakarta</div>
+                            <div onclick="selectOption('location', 'Surabaya', 'Surabaya')" class="p-3 hover:bg-brand-50 cursor-pointer text-gray-600">Surabaya</div>
+                            <div onclick="selectOption('location', 'Semarang', 'Semarang')" class="p-3 hover:bg-brand-50 cursor-pointer text-gray-600">Semarang</div>
+                            <div onclick="selectOption('location', 'Bandung', 'Bandung')" class="p-3 hover:bg-brand-50 cursor-pointer text-gray-600">Bandung</div>
+                            <div onclick="selectOption('location', 'Medan', 'Medan')" class="p-3 hover:bg-brand-50 cursor-pointer text-gray-600">Medan</div>
+                            <!-- Add more locations -->
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="resetPaginationAndFilter()" class="bg-brand-600 hover:bg-brand-500 text-white font-bold text-xl py-3 px-10 rounded-xl transition shadow-lg lg:w-auto w-full h-20 flex items-center justify-center gap-3">
+                    <i class="fas fa-search"></i> Cari
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full">
+        <div class="flex flex-col lg:flex-row gap-10">
+            
+            <!-- LEFT COLUMN: LIST LOWONGAN -->
+            <div class="w-full lg:w-2/3">
+                <div class="flex justify-between items-end mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+                            <span class="bg-brand-100 text-brand-700 p-2.5 rounded-xl text-xl"><i class="far fa-newspaper"></i></span>
+                            Lowongan Terbaru
+                        </h2>
+                        <p class="text-base text-gray-500 mt-2">Menampilkan <span id="showingStart">0</span>-<span id="showingEnd">0</span> dari <span id="totalJobs">0</span> lowongan.</p>
+                    </div>
+                </div>
+                
+                <!-- Job Container -->
+                <div id="jobContainer" class="space-y-4">
+                    <!-- Cards will be injected here -->
+                </div>
+
+                <!-- PAGINATION CONTROLS -->
+                <div id="paginationControls" class="mt-10 flex justify-center items-center gap-2">
+                    <!-- Buttons will be injected here -->
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: SIDEBAR -->
+            <aside class="w-full lg:w-1/3 space-y-8">
+                
+                <!-- Widget: Banner Pasang Iklan -->
+                <div class="bg-gradient-to-br from-brand-600 to-brand-800 rounded-2xl p-8 text-white shadow-lg relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 text-8xl transform translate-x-4 -translate-y-4"><i class="fas fa-bullhorn"></i></div>
+                    <h3 class="font-bold text-2xl mb-3 relative z-10">Ingin Merekrut?</h3>
+                    <p class="text-brand-100 text-base mb-6 relative z-10">Pasang lowongan perusahaan Anda dan dapatkan kandidat terbaik.</p>
+                    <!-- Link Email untuk Pasang Iklan Gratis -->
+                    <a href="mailto:admin@lokerkita.com?subject=Pasang%20Lowongan%20Kerja%20Gratis&body=Halo%20Admin,%0A%0ASaya%20ingin%20memasang%20iklan%20lowongan%20kerja%20GRATIS.%0AMohon%20infonya.%0A%0ATerima%20kasih." class="block w-full bg-white text-brand-700 font-bold py-3.5 rounded-xl shadow-lg hover:bg-gray-50 transition relative z-10 text-lg text-center">
+                        Pasang Iklan Gratis
+                    </a>
+                </div>
+
+                <!-- Widget: Kategori Cepat -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700">
+                    <h3 class="font-bold text-xl mb-6 flex items-center gap-2 border-b border-gray-100 dark:border-gray-700 pb-4">
+                        <i class="fas fa-tags text-brand-500"></i> Kategori Cepat
+                    </h3>
+                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Bidang Pekerjaan</h4>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <button onclick="quickSearch('Admin')" class="tag-btn">Admin</button>
+                        <button onclick="quickSearch('Marketing')" class="tag-btn">Marketing</button>
+                        <button onclick="quickSearch('Teknologi')" class="tag-btn">IT & Tech</button>
+                        <button onclick="quickSearch('Keuangan')" class="tag-btn">Akuntansi</button>
+                        <button onclick="quickSearch('Pabrik')" class="tag-btn">Pabrik</button>
+                    </div>
+                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Tingkat Pendidikan</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="quickSearch('SD')" class="tag-btn">SD</button>
+                        <button onclick="quickSearch('SMP')" class="tag-btn">SMP</button>
+                        <button onclick="quickSearch('SMA')" class="tag-btn">SMA / SMK</button>
+                        <button onclick="quickSearch('S1')" class="tag-btn">S1</button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800 text-center text-sm">
+        &copy; 2026 LokerKita. All rights reserved.
+    </footer>
+
+    <script>
+        let allJobs = [];
+        let currentPage = 1;
+        const ITEMS_PER_PAGE = 20; // BATAS 20 KONTEN PER HALAMAN
+
+        // --- GENERATE DUMMY DATA (Agar Pagination Terlihat) ---
+        function generateMockData() {
+            const data = [];
+            const categories = ['Admin', 'Marketing', 'Teknologi', 'Keuangan', 'Manufaktur', 'Pendidikan'];
+            const locations = ['Semarang', 'Jakarta', 'Surabaya', 'Bandung', 'Medan'];
+            const companies = ['PT. Maju Jaya', 'CV. Abadi', 'Tech Corp', 'Global Indo', 'Sejahtera Group'];
+
+            for (let i = 1; i <= 45; i++) {
+                const cat = categories[Math.floor(Math.random() * categories.length)];
+                const loc = locations[Math.floor(Math.random() * locations.length)];
+                data.push({
+                    id: i,
+                    title: `Posisi Lowongan Kerja ${i} - ${cat}`,
+                    company: companies[Math.floor(Math.random() * companies.length)],
+                    location: loc,
+                    category: cat,
+                    date: "2026-01-08",
+                    desc: `Ini adalah deskripsi singkat untuk lowongan nomor ${i}. Posisi ini membutuhkan kandidat yang kompeten di bidang ${cat}.`
+                });
+            }
+            return data;
+        }
+
+        window.onload = function() {
+            if(localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+            
+            // Generate Data Dummy Banyak
+            allJobs = generateMockData();
+            
+            // Coba Fetch jika ada
+            fetch('jobs.json?v=' + new Date().getTime())
+                .then(res => res.json())
+                .then(data => { 
+                    if(data.length > 0) {
+                        allJobs = data; 
+                        resetPaginationAndFilter();
+                    }
+                })
+                .catch(err => { 
+                    console.log("Using Mock Data"); 
+                    resetPaginationAndFilter(); 
+                });
+                
+            renderJobs(allJobs);
+        };
+
+        // --- LOGIKA UTAMA RENDER & PAGINATION ---
+        function renderJobs(jobs) {
+            const container = document.getElementById('jobContainer');
+            container.innerHTML = '';
+            
+            // Hitung Index untuk Slice Array
+            const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+            const endIndex = startIndex + ITEMS_PER_PAGE;
+            const paginatedJobs = jobs.slice(startIndex, endIndex);
+
+            // Update Info Text
+            document.getElementById('totalJobs').innerText = jobs.length;
+            document.getElementById('showingStart').innerText = jobs.length > 0 ? startIndex + 1 : 0;
+            document.getElementById('showingEnd').innerText = Math.min(endIndex, jobs.length);
+
+            if(paginatedJobs.length === 0) {
+                container.innerHTML = `<div class="p-16 text-center bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700"><h3 class="font-bold text-2xl">Tidak ada lowongan ditemukan</h3></div>`; 
+                renderPaginationControls(0);
+                return;
+            }
+
+            paginatedJobs.forEach(job => {
+                // Determine icon
+                let icon = "fa-briefcase";
+                if(job.category === 'Admin') icon = "fa-file-alt";
+                if(job.category === 'Marketing') icon = "fa-bullhorn";
+                if(job.category === 'Teknologi') icon = "fa-laptop-code";
+
+                // --- TAMPILAN KARTU DIPERKECIL (COMPACT) ---
+                // Padding dikurangi (p-8 -> p-5), Gap dikurangi, Ikon diperkecil
+                const html = `
+                <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:border-brand-200 transition duration-300 flex flex-col md:flex-row gap-5 group relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-transparent group-hover:bg-brand-500 transition-colors"></div>
+
+                    <div class="hidden md:flex flex-col items-center justify-start w-16 pt-1 flex-shrink-0">
+                        <div class="w-12 h-12 bg-gray-50 dark:bg-gray-700 rounded-xl flex items-center justify-center text-2xl text-gray-400 group-hover:text-brand-600 group-hover:bg-brand-50 dark:group-hover:bg-brand-900/30 transition">
+                            <i class="fas ${icon}"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-1">
+                             <span class="bg-brand-50 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 text-[10px] font-bold px-2 py-0.5 rounded uppercase border border-brand-100 dark:border-brand-800">${job.category || 'Umum'}</span>
+                             <span class="text-xs text-gray-400">&bull; ${job.date || 'Baru Saja'}</span>
+                        </div>
+                        
+                        <a href="detail.html?id=${job.id}" class="block">
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-brand-600 transition leading-snug">${job.title}</h3>
+                        </a>
+                        
+                        <p class="text-gray-500 dark:text-gray-400 text-sm mb-2 font-medium flex items-center gap-3">
+                            <span class="flex items-center gap-1"><i class="far fa-building"></i> ${job.company}</span>
+                            <span class="flex items-center gap-1"><i class="fas fa-map-marker-alt"></i> ${job.location}</span>
+                        </p>
+                        
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-2 leading-relaxed">${job.desc ? job.desc.substring(0, 140) : 'Deskripsi tidak tersedia'}...</p>
+                        
+                        <a href="detail.html?id=${job.id}" class="inline-flex items-center gap-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-brand-600 hover:text-white hover:border-brand-600 dark:hover:bg-brand-600 transition text-sm font-bold px-4 py-2 rounded-lg shadow-sm">
+                            Lihat Detail <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>`;
+                container.innerHTML += html;
+            });
+
+            renderPaginationControls(jobs.length);
+        }
+
+        function renderPaginationControls(totalItems) {
+            const container = document.getElementById('paginationControls');
+            container.innerHTML = '';
+            
+            const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+            if (totalPages <= 1) return;
+
+            // Prev Button
+            const prevBtn = document.createElement('button');
+            prevBtn.innerHTML = '&larr; Prev';
+            prevBtn.className = `px-4 py-2 rounded-lg border text-sm font-bold ${currentPage === 1 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white hover:bg-gray-50 text-gray-700'}`;
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.onclick = () => { if(currentPage > 1) { currentPage--; filterJobs(false); } };
+            container.appendChild(prevBtn);
+
+            // Page Numbers
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.innerText = i;
+                btn.className = `w-10 h-10 rounded-lg text-sm font-bold border transition ${i === currentPage ? 'bg-brand-600 text-white border-brand-600' : 'bg-white text-gray-600 hover:bg-gray-50'}`;
+                btn.onclick = () => { currentPage = i; filterJobs(false); };
+                container.appendChild(btn);
+            }
+
+            // Next Button
+            const nextBtn = document.createElement('button');
+            nextBtn.innerHTML = 'Next &rarr;';
+            nextBtn.className = `px-4 py-2 rounded-lg border text-sm font-bold ${currentPage === totalPages ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white hover:bg-gray-50 text-gray-700'}`;
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.onclick = () => { if(currentPage < totalPages) { currentPage++; filterJobs(false); } };
+            container.appendChild(nextBtn);
+        }
+
+        // --- FILTERING ---
+        function filterJobs(resetPage = true) {
+            if(resetPage) currentPage = 1;
+
+            const q = document.getElementById('searchInput').value.toLowerCase();
+            const cat = document.getElementById('categoryInput').value; 
+            const loc = document.getElementById('locationInput').value;
+            
+            const filtered = allJobs.filter(j => 
+                (j.title.toLowerCase().includes(q) || j.company.toLowerCase().includes(q)) && 
+                (cat === "" || j.category === cat) &&
+                (loc === "" || j.location.includes(loc))
+            );
+            
+            renderJobs(filtered);
+            // Scroll to top of list if changing pages
+            if(!resetPage) document.getElementById('jobContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function resetPaginationAndFilter() {
+            currentPage = 1;
+            filterJobs();
+        }
+
+        // --- Custom Dropdown Logic (Standard) ---
+        function toggleDropdown(type) {
+            const menu = document.getElementById(type + 'Menu');
+            const chevron = document.getElementById(type + 'Chevron');
+            const container = document.getElementById(type + 'Container');
+            if(type === 'category') closeDropdown('location');
+            if(type === 'location') closeDropdown('category');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                requestAnimationFrame(() => { menu.classList.add('dropdown-enter-active'); menu.classList.remove('dropdown-enter'); });
+                chevron.style.transform = 'rotate(180deg)';
+                container.classList.add('border-brand-500');
+            } else { closeDropdown(type); }
+        }
+        function closeDropdown(type) {
+            const menu = document.getElementById(type + 'Menu');
+            const chevron = document.getElementById(type + 'Chevron');
+            const container = document.getElementById(type + 'Container');
+            if (!menu.classList.contains('hidden')) {
+                menu.classList.add('dropdown-exit-active');
+                setTimeout(() => {
+                    menu.classList.add('hidden');
+                    menu.classList.remove('dropdown-exit-active', 'dropdown-enter-active');
+                    menu.classList.add('dropdown-enter');
+                }, 150);
+                chevron.style.transform = 'rotate(0deg)';
+                container.classList.remove('border-brand-500');
+            }
+        }
+        function closeAllDropdowns(event) { if (!event.target.closest('.dropdown-container')) { closeDropdown('category'); closeDropdown('location'); } }
+        function selectOption(type, value, label) {
+            document.getElementById(type + 'Input').value = value;
+            document.getElementById(type + 'Display').innerText = label;
+            document.getElementById(type + 'Display').classList.add('text-brand-600');
+            closeDropdown(type);
+            resetPaginationAndFilter();
+        }
+        function quickSearch(keyword) { document.getElementById('searchInput').value = keyword; selectOption('category', '', 'Semua Kategori'); selectOption('location', '', 'Seluruh Indonesia'); resetPaginationAndFilter(); }
+        function toggleDarkMode() { document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light'); }
+    </script>
+    <style>.tag-btn { @apply px-3 py-1.5 bg-gray-100 hover:bg-brand-100 text-gray-600 hover:text-brand-700 text-sm font-medium rounded-full transition dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-brand-900/50 dark:hover:text-brand-300 border border-transparent hover:border-brand-200; }</style>
+</body>
+</html>

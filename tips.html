@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tips & Trik Karir - LokerKita</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+                    colors: {
+                        brand: { 50:'#f0fdfa', 100:'#ccfbf1', 500:'#14b8a6', 600:'#0d9488', 700:'#0f766e', 800:'#115e59', 900:'#134e4a' }
+                    },
+                    boxShadow: { 'soft': '0 10px 40px -10px rgba(0,0,0,0.08)' }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 font-sans flex flex-col min-h-screen">
+
+    <!-- NAVBAR -->
+    <nav class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 bg-gradient-to-br from-brand-500 to-brand-700 rounded-lg flex items-center justify-center text-white font-bold text-2xl shadow-lg shadow-brand-500/30 group-hover:scale-105 transition transform duration-200">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-2xl tracking-tight text-gray-900 dark:text-white leading-none">Loker<span class="text-brand-600">Kita</span></h1>
+                        <p class="text-xs text-gray-500 uppercase tracking-widest font-bold mt-1">Portal Karir No. 1</p>
+                    </div>
+                </a>
+                <div class="hidden md:flex items-center space-x-8 text-base font-semibold">
+                    <a href="index.html" class="text-gray-500 hover:text-brand-600 dark:text-gray-300 dark:hover:text-brand-400 transition">Beranda</a>
+                    <a href="tips.html" class="text-brand-600 hover:text-brand-700 transition">Tips Karir</a>
+                    
+                    <div class="h-6 w-px bg-gray-200 dark:bg-gray-700"></div>
+                    
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 transition">
+                        <i class="fas fa-moon" id="theme-icon"></i>
+                    </button>
+                    
+                    <a href="mailto:admin@lokerkita.com?subject=Pasang%20Lowongan%20Kerja&body=Halo%20Admin%20LokerKita,%0A%0ASaya%20ingin%20memasang%20info%20lowongan%20kerja%20di%20website%20Anda.%0AMohon%20infonya.%0A%0ATerima%20kasih." class="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-6 py-3 rounded-full text-sm font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition duration-200">
+                        Pasang Lowongan
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+    <div class="bg-brand-900 py-16 px-4 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10 text-white">
+            <h1 class="text-3xl md:text-5xl font-extrabold mb-4">Tips & Trik Sukses Karir</h1>
+            <p class="text-brand-100 text-lg">Pelajari cara membuat CV, interview, hingga negosiasi gaji langsung dari para ahli.</p>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT (VIDEO GRID) -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full">
+        
+        <!-- Video Container -->
+        <div id="videoContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Videos will be injected here -->
+        </div>
+
+        <!-- Pagination Controls -->
+        <div id="paginationControls" class="mt-12 flex justify-center items-center gap-2">
+            <!-- Buttons will be injected here -->
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800 text-center text-sm">
+        &copy; 2026 LokerKita. All rights reserved.
+    </footer>
+
+    <script>
+        // --- KONFIGURASI VIDEO ---
+        const videoList = [
+            { id: "RlxMBI28y0w", title: "Cara Tepat Negosiasi Gaji Saat Interview Kerja" },
+            { id: "nHf_9Mo23M4", title: "Ditawari Gaji Kecil? Ini Cara Negonya! | Ruang HRD" },
+            { id: "vhMec9F9wc8", title: "Tips Interview Kerja dari Vina Muliana" },
+            { id: "K_N5e6vGvAM", title: "Kunci Jawaban Pertanyaan Interview Kerja: “Perkenalkan Diri…”" },
+            { id: "TvPxEZ-64mM", title: "Kunci Jawaban Interview “Apa Kelemahan Kamu?”" },
+            { id: "5jUEInY7WkM", title: "Webinar: Tips Mengisi Profil JobStreet" },
+            { id: "Kxn9P5JfsyM", title: "Cara Keterima Kerja Lewat Jobstreet | Kisi-Kisi Karier" },
+            { id: "SicqJY18W1A", title: "Tips jadi Kandidat Berkualitas saat Interview Kerja" },
+            { id: "km2Hd_xgo9Q", title: "How to Negotiate Your Job Offer – Prof. Deepak Malhotra" },
+            { id: "wo-uGrLWAtg", title: "Salary Negotiation and Your Next Job" },
+            { id: "Qhr7Cy7YLrM", title: "How to Answer “What Are Your Salary Expectations?”" }
+        ];
+
+        let currentPage = 1;
+        const ITEMS_PER_PAGE = 6; // 3 kolom x 2 baris = 6 video
+
+        window.onload = function() {
+            if(localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+            renderVideos();
+        };
+
+        function renderVideos() {
+            const container = document.getElementById('videoContainer');
+            container.innerHTML = '';
+
+            // Pagination Logic
+            const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+            const endIndex = startIndex + ITEMS_PER_PAGE;
+            const paginatedVideos = videoList.slice(startIndex, endIndex);
+
+            if(paginatedVideos.length === 0) {
+                container.innerHTML = `<div class="col-span-3 text-center py-10">Belum ada video tips karir.</div>`;
+                return;
+            }
+
+            paginatedVideos.forEach(video => {
+                // UPDATE: Menggunakan Link (<a>) ke YouTube New Tab
+                const html = `
+                <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-soft border border-gray-100 dark:border-gray-700 hover:shadow-lg transition group">
+                    
+                    <!-- Link ke YouTube New Tab -->
+                    <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank" class="block relative w-full aspect-video bg-gray-200 cursor-pointer group/play">
+                        
+                        <!-- Thumbnail Statis -->
+                        <img 
+                            src="https://img.youtube.com/vi/${video.id}/hqdefault.jpg" 
+                            alt="${video.title}" 
+                            class="absolute top-0 left-0 w-full h-full object-cover"
+                            onerror="this.src='https://placehold.co/600x400?text=No+Thumbnail'"
+                        >
+                        
+                        <!-- Tombol Play Overlay -->
+                        <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover/play:bg-black/10 transition">
+                            <div class="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-lg transform group-hover/play:scale-110 transition">
+                                <i class="fas fa-play text-white ml-1"></i>
+                            </div>
+                        </div>
+
+                    </a>
+
+                    <div class="p-5">
+                        <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank" class="block font-bold text-lg text-gray-900 dark:text-white line-clamp-2 group-hover:text-brand-600 transition">
+                            ${video.title}
+                        </a>
+                        <div class="mt-3 flex items-center gap-2 text-xs text-gray-500 font-bold uppercase tracking-wider">
+                            <span class="bg-brand-50 text-brand-700 px-2 py-1 rounded">Tips Karir</span>
+                            <span>&bull; Video</span>
+                        </div>
+                    </div>
+                </div>
+                `;
+                container.innerHTML += html;
+            });
+
+            renderPaginationControls();
+        }
+
+        function renderPaginationControls() {
+            const container = document.getElementById('paginationControls');
+            container.innerHTML = '';
+            
+            const totalPages = Math.ceil(videoList.length / ITEMS_PER_PAGE);
+            if (totalPages <= 1) return;
+
+            // Prev Button
+            const prevBtn = document.createElement('button');
+            prevBtn.innerHTML = '&larr; Prev';
+            prevBtn.className = `px-4 py-2 rounded-lg border text-sm font-bold ${currentPage === 1 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white hover:bg-gray-50 text-gray-700'}`;
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.onclick = () => { if(currentPage > 1) { currentPage--; renderVideos(); window.scrollTo(0,0); } };
+            container.appendChild(prevBtn);
+
+            // Page Numbers
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.innerText = i;
+                btn.className = `w-10 h-10 rounded-lg text-sm font-bold border transition ${i === currentPage ? 'bg-brand-600 text-white border-brand-600' : 'bg-white text-gray-600 hover:bg-gray-50'}`;
+                btn.onclick = () => { currentPage = i; renderVideos(); window.scrollTo(0,0); };
+                container.appendChild(btn);
+            }
+
+            // Next Button
+            const nextBtn = document.createElement('button');
+            nextBtn.innerHTML = 'Next &rarr;';
+            nextBtn.className = `px-4 py-2 rounded-lg border text-sm font-bold ${currentPage === totalPages ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white hover:bg-gray-50 text-gray-700'}`;
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.onclick = () => { if(currentPage < totalPages) { currentPage++; renderVideos(); window.scrollTo(0,0); } };
+            container.appendChild(nextBtn);
+        }
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Lowongan - LokerKita</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+                    colors: { brand: { 50:'#f0fdfa', 100:'#ccfbf1', 500:'#14b8a6', 600:'#0d9488', 700:'#0f766e', 800:'#115e59', 900:'#134e4a' } },
+                    boxShadow: { 'soft': '0 10px 40px -10px rgba(0,0,0,0.08)' }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Animasi Dropdown */
+        .dropdown-enter { opacity: 0; transform: scale(0.95) translateY(-10px); }
+        .dropdown-enter-active { opacity: 1; transform: scale(1) translateY(0); transition: opacity 0.2s ease-out, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .dropdown-exit { opacity: 1; transform: scale(1) translateY(0); }
+        .dropdown-exit-active { opacity: 0; transform: scale(0.95) translateY(-10px); transition: opacity 0.15s ease-in, transform 0.15s ease-in; }
+        
+        .badge { @apply bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-lg text-base text-gray-600 dark:text-gray-300 font-bold border border-gray-200 dark:border-gray-600; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 font-sans flex flex-col min-h-screen" onclick="closeAllDropdowns(event)">
+
+    <!-- NAVBAR -->
+    <nav class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 bg-gradient-to-br from-brand-500 to-brand-700 rounded-lg flex items-center justify-center text-white font-bold text-2xl shadow-lg shadow-brand-500/30 group-hover:scale-105 transition transform duration-200">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-2xl tracking-tight text-gray-900 dark:text-white leading-none">Loker<span class="text-brand-600">Kita</span></h1>
+                        <p class="text-xs text-gray-500 uppercase tracking-widest font-bold mt-1">Portal Karir No. 1</p>
+                    </div>
+                </a>
+
+                <div class="hidden md:flex items-center space-x-6 text-base font-medium">
+                    <a href="index.html" class="text-brand-600 hover:text-brand-700 font-bold">Beranda</a>
+                    <a href="tips.html" class="text-gray-500 hover:text-brand-600 dark:text-gray-300">Tips Karir</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SEARCH SECTION -->
+    <div class="relative bg-brand-900 overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-50 dark:from-gray-900 to-transparent z-10"></div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 py-16 flex flex-col items-center text-center z-20">
+            <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-8 leading-tight tracking-tight">
+                Cari Lowongan Lainnya?
+            </h2>
+
+            <!-- SEARCH BAR BOX -->
+            <div class="w-full max-w-6xl bg-white dark:bg-gray-800 p-2 md:p-4 rounded-2xl shadow-soft flex flex-col lg:flex-row gap-4 relative z-30">
+                <!-- 1. Input Keyword -->
+                <div class="flex-[1.4] flex items-center px-5 bg-gray-50 dark:bg-gray-700/50 rounded-xl border-2 border-transparent focus-within:border-brand-500 focus-within:bg-white dark:focus-within:bg-gray-800 transition-all duration-300 h-20">
+                    <div class="w-12 h-12 rounded-full bg-brand-50 dark:bg-gray-600 flex items-center justify-center text-brand-600 dark:text-brand-300 mr-4 flex-shrink-0 text-xl">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="w-full text-left">
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wide mb-1">Kata Kunci</label>
+                        <input type="text" placeholder="Posisi, perusahaan..." class="w-full bg-transparent outline-none text-gray-800 dark:text-white font-bold placeholder-gray-300 text-lg md:text-xl truncate">
+                    </div>
+                </div>
+
+                <!-- 2. Custom Dropdown: Kategori -->
+                <div class="flex-1 relative group h-20 bg-gray-50 dark:bg-gray-700/50 rounded-xl border-2 border-transparent hover:border-brand-200 dark:hover:border-gray-600 transition-all duration-300 dropdown-container" id="categoryContainer">
+                    <div class="absolute inset-0 flex items-center px-5 cursor-pointer" onclick="toggleDropdown('category')">
+                        <div class="w-12 h-12 rounded-full bg-orange-50 dark:bg-gray-600 flex items-center justify-center text-orange-500 dark:text-orange-300 mr-4 flex-shrink-0 text-xl">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="w-full overflow-hidden text-left">
+                             <label class="block text-xs font-bold text-gray-400 uppercase tracking-wide mb-1 cursor-pointer">Kategori</label>
+                             <div id="categoryDisplay" class="font-bold text-gray-800 dark:text-white text-lg md:text-xl truncate select-none">Semua Kategori</div>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 ml-2 transition-transform duration-300 text-lg" id="categoryChevron"></i>
+                    </div>
+                    <!-- Menu Dummy (Visual Only on Detail Page) -->
+                    <div id="categoryMenu" class="hidden absolute top-[calc(100%+8px)] left-0 right-0 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 z-50 overflow-hidden transform origin-top transition-all duration-200">
+                        <div class="max-h-60 overflow-y-auto p-2 custom-scrollbar">
+                            <div onclick="selectOption('category', 'Admin & HRD')" class="p-3 rounded-xl hover:bg-brand-50 dark:hover:bg-gray-700 cursor-pointer text-base font-medium text-gray-600 dark:text-gray-300 flex items-center gap-3">
+                                <span class="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center text-blue-500"><i class="fas fa-user-tie"></i></span> Admin & HRD
+                            </div>
+                            <div onclick="selectOption('category', 'Marketing')" class="p-3 rounded-xl hover:bg-brand-50 dark:hover:bg-gray-700 cursor-pointer text-base font-medium text-gray-600 dark:text-gray-300 flex items-center gap-3">
+                                <span class="w-9 h-9 rounded-lg bg-green-50 flex items-center justify-center text-green-500"><i class="fas fa-bullhorn"></i></span> Marketing
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Custom Dropdown: Lokasi -->
+                <div class="flex-1 relative group h-20 bg-gray-50 dark:bg-gray-700/50 rounded-xl border-2 border-transparent hover:border-brand-200 dark:hover:border-gray-600 transition-all duration-300 dropdown-container" id="locationContainer">
+                    <div class="absolute inset-0 flex items-center px-5 cursor-pointer" onclick="toggleDropdown('location')">
+                        <div class="w-12 h-12 rounded-full bg-red-50 dark:bg-gray-600 flex items-center justify-center text-red-500 dark:text-red-300 mr-4 flex-shrink-0 text-xl">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="w-full overflow-hidden text-left">
+                             <label class="block text-xs font-bold text-gray-400 uppercase tracking-wide mb-1 cursor-pointer">Lokasi</label>
+                             <div id="locationDisplay" class="font-bold text-gray-800 dark:text-white text-lg md:text-xl truncate select-none">Seluruh Indonesia</div>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 ml-2 transition-transform duration-300 text-lg" id="locationChevron"></i>
+                    </div>
+                    <!-- Menu Dummy (Visual Only) -->
+                    <div id="locationMenu" class="hidden absolute top-[calc(100%+8px)] left-0 right-0 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 z-50 overflow-hidden transform origin-top transition-all duration-200">
+                        <div class="max-h-60 overflow-y-auto p-2 custom-scrollbar">
+                            <div onclick="selectOption('location', 'Jakarta')" class="p-3 rounded-xl hover:bg-brand-50 dark:hover:bg-gray-700 cursor-pointer text-base font-medium text-gray-600 dark:text-gray-300 flex items-center gap-3">
+                                <span class="w-9 h-9 rounded-lg bg-gray-50 flex items-center justify-center text-gray-400"><i class="fas fa-city"></i></span> Jakarta
+                            </div>
+                            <div onclick="selectOption('location', 'Surabaya')" class="p-3 rounded-xl hover:bg-brand-50 dark:hover:bg-gray-700 cursor-pointer text-base font-medium text-gray-600 dark:text-gray-300 flex items-center gap-3">
+                                <span class="w-9 h-9 rounded-lg bg-gray-50 flex items-center justify-center text-gray-400"><i class="fas fa-city"></i></span> Surabaya
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tombol Cari (Redirect ke Index) -->
+                <a href="index.html" class="bg-brand-600 hover:bg-brand-500 text-white font-bold text-xl py-3 px-10 rounded-xl transition shadow-lg shadow-brand-600/30 transform hover:-translate-y-1 active:translate-y-0 active:shadow-md lg:w-auto w-full h-20 flex items-center justify-center gap-3">
+                    <i class="fas fa-search"></i> Cari
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full">
+        
+        <!-- Breadcrumb Besar -->
+        <div class="text-base text-gray-500 mb-8 flex gap-3 items-center font-medium">
+            <a href="index.html" class="hover:text-brand-600 hover:underline">Beranda</a> 
+            <i class="fas fa-chevron-right text-xs"></i> 
+            <span id="bcCategory" class="text-gray-700 dark:text-gray-300">Lowongan</span>
+            <i class="fas fa-chevron-right text-xs"></i>
+            <span class="text-brand-600 font-bold truncate max-w-[300px]" id="bcTitle">Loading...</span>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-10">
+            
+            <!-- LEFT: DETAIL KONTEN -->
+            <div class="w-full lg:w-2/3 bg-white dark:bg-gray-800 p-8 md:p-10 rounded-3xl shadow-soft border border-gray-100 dark:border-gray-700 h-fit relative overflow-hidden">
+                
+                <!-- Decorative Top Border -->
+                <div class="absolute top-0 left-0 right-0 h-2 bg-brand-500"></div>
+
+                <!-- Loading State -->
+                <div id="loadingState" class="animate-pulse space-y-6 py-10">
+                    <div class="h-10 bg-gray-200 dark:bg-gray-700 rounded-lg w-3/4"></div>
+                    <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded-lg w-1/2"></div>
+                    <div class="h-64 bg-gray-200 dark:bg-gray-700 rounded-2xl w-full mt-8"></div>
+                </div>
+
+                <!-- Actual Content (Hidden initially) -->
+                <div id="jobContent" class="hidden">
+                    <div class="mb-10 border-b border-gray-200 dark:border-gray-700 pb-8">
+                        <span id="dCategory" class="text-sm font-extrabold uppercase tracking-widest text-brand-600 bg-brand-50 dark:bg-brand-900/30 px-4 py-1.5 rounded-full border border-brand-100 dark:border-brand-800 mb-4 inline-block shadow-sm">Category</span>
+                        
+                        <h1 id="dTitle" class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-3 leading-tight">Job Title</h1>
+                        
+                        <div class="flex flex-wrap items-center gap-6 mt-4">
+                            <p class="text-xl text-gray-600 dark:text-gray-300 font-bold flex items-center">
+                                <i class="far fa-building text-brand-500 mr-2 text-2xl"></i> <span id="dCompany">Company</span>
+                            </p>
+                            <p class="text-lg text-gray-500 dark:text-gray-400 font-medium flex items-center">
+                                <i class="fas fa-clock mr-2"></i> Diposting: <span id="dDate" class="ml-1">Baru Saja</span>
+                            </p>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-4 mt-8">
+                            <span class="badge flex items-center gap-2"><i class="fas fa-map-marker-alt text-red-500 text-xl"></i> <span id="dLocation">Loc</span></span>
+                            <span class="badge flex items-center gap-2"><i class="fas fa-briefcase text-blue-500 text-xl"></i> <span id="dType">Full Time</span></span>
+                            <span class="badge flex items-center gap-2"><i class="fas fa-money-bill-wave text-green-500 text-xl"></i> <span id="dSalary">Salary</span></span>
+                        </div>
+                    </div>
+
+                    <!-- Description Area -->
+                    <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300">
+                        <h3 class="font-bold text-2xl text-gray-900 dark:text-white border-l-8 border-brand-600 pl-4 mb-6">Deskripsi Pekerjaan</h3>
+                        <div id="dDesc" class="whitespace-pre-line mb-10 text-lg leading-relaxed font-medium text-gray-600 dark:text-gray-300"></div>
+                        
+                        <h3 class="font-bold text-2xl text-gray-900 dark:text-white border-l-8 border-brand-600 pl-4 mb-6">Kualifikasi</h3>
+                        <ul id="dReqs" class="list-disc ml-6 space-y-3 text-lg leading-relaxed font-medium text-gray-600 dark:text-gray-300"></ul>
+                    </div>
+
+                    <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+                        <a id="applyBtn" href="#" target="_blank" class="block w-full bg-green-600 hover:bg-green-700 text-white font-bold text-center py-5 rounded-2xl shadow-xl shadow-green-200 dark:shadow-none transition text-2xl transform hover:-translate-y-1">
+                            <i class="fab fa-whatsapp mr-3"></i> Lamar Sekarang via WhatsApp
+                        </a>
+                        <p class="text-center text-sm text-gray-400 mt-4 font-medium bg-gray-50 dark:bg-gray-800 py-3 rounded-lg border border-gray-100 dark:border-gray-700">
+                            <i class="fas fa-shield-alt mr-1"></i> Hati-hati penipuan! LokerKita tidak pernah memungut biaya apapun.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Error State -->
+                <div id="errorState" class="hidden text-center py-20">
+                    <div class="w-24 h-24 bg-yellow-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-exclamation-triangle text-5xl text-yellow-500"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Lowongan Tidak Ditemukan</h2>
+                    <p class="text-xl text-gray-500 mb-8">Mungkin lowongan sudah dihapus atau link salah.</p>
+                    <a href="index.html" class="bg-brand-600 text-white font-bold py-3 px-8 rounded-xl hover:bg-brand-700 transition">Kembali ke Beranda</a>
+                </div>
+
+            </div>
+
+            <!-- RIGHT: SIDEBAR WIDGETS -->
+            <aside class="w-full lg:w-1/3 space-y-8">
+                
+                <!-- Share Widget (Updated Logic) -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-soft border border-gray-100 dark:border-gray-700">
+                    <h3 class="font-bold text-xl mb-6 flex items-center gap-3">
+                        <span class="w-10 h-10 bg-brand-100 dark:bg-brand-900 rounded-lg flex items-center justify-center text-brand-600"><i class="fas fa-share-alt"></i></span>
+                        Bagikan Lowongan
+                    </h3>
+                    <div class="flex flex-col gap-3">
+                        <!-- COPY LINK BUTTON (Fixed Event) -->
+                        <button onclick="shareJob(event)" class="flex items-center justify-center gap-3 py-4 bg-gray-100 dark:bg-gray-700 hover:bg-brand-50 hover:text-brand-600 dark:hover:text-brand-300 rounded-xl transition font-bold text-lg">
+                            <i class="fas fa-link"></i> Salin Link
+                        </button>
+                        
+                        <!-- WA Share Button (Fixed Logic) -->
+                        <button onclick="shareToWa()" class="flex items-center justify-center gap-3 py-4 bg-green-500 text-white rounded-xl hover:bg-green-600 transition font-bold text-lg shadow-lg shadow-green-200 dark:shadow-none">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </button>
+                        
+                        <!-- FB Share Button (Fixed Logic) -->
+                        <button onclick="shareToFb()" class="flex items-center justify-center gap-3 py-4 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition font-bold text-lg shadow-lg shadow-blue-200 dark:shadow-none">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Safety Widget -->
+                <div class="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-3xl border border-blue-100 dark:border-blue-900/30">
+                    <h3 class="font-bold text-xl text-blue-800 dark:text-blue-300 mb-4 flex items-center gap-3">
+                        <i class="fas fa-user-shield text-2xl"></i> Tips Keamanan
+                    </h3>
+                    <ul class="text-base text-blue-900 dark:text-blue-200 space-y-4 list-disc ml-5 font-medium leading-relaxed">
+                        <li>Jangan pernah transfer uang untuk alasan apapun (travel, seragam, adm).</li>
+                        <li>Pastikan lokasi interview di kantor resmi atau tempat umum.</li>
+                        <li>Cek kredibilitas perusahaan di Google sebelum datang.</li>
+                    </ul>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800 text-center text-sm">
+        <p>&copy; 2026 LokerKita. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Ambil ID dari URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const jobId = urlParams.get('id');
+
+        window.onload = function() {
+            // Cek Dark Mode
+            if(localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+
+            if(!jobId) {
+                showError();
+                return;
+            }
+
+            // Fetch Data yang SAMA dengan Index
+            fetch('jobs.json?v=' + new Date().getTime())
+                .then(res => res.json())
+                .then(data => {
+                    const job = data.find(j => j.id == jobId);
+                    if(job) {
+                        renderDetail(job);
+                    } else {
+                        showError();
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    showError();
+                });
+        };
+
+        function renderDetail(job) {
+            document.getElementById('loadingState').classList.add('hidden');
+            document.getElementById('jobContent').classList.remove('hidden');
+
+            document.title = `${job.title} di ${job.company} - LokerKita`;
+
+            // Isi Konten
+            document.getElementById('bcTitle').innerText = job.title;
+            document.getElementById('bcCategory').innerText = job.category;
+            
+            document.getElementById('dTitle').innerText = job.title;
+            document.getElementById('dCompany').innerText = job.company;
+            document.getElementById('dCategory').innerText = job.category;
+            document.getElementById('dLocation').innerText = job.location;
+            document.getElementById('dSalary').innerText = job.salary;
+            document.getElementById('dType').innerText = job.type || 'Full Time';
+            document.getElementById('dDesc').innerText = job.desc || "Deskripsi tidak tersedia.";
+            document.getElementById('dDate').innerText = job.date || "Baru Saja";
+
+            // Requirements
+            const reqList = document.getElementById('dReqs');
+            if(job.reqs && job.reqs.length > 0) {
+                job.reqs.forEach(r => reqList.innerHTML += `<li>${r}</li>`);
+            } else {
+                reqList.innerHTML = '<li class="italic text-gray-400">Lihat deskripsi pekerjaan.</li>';
+            }
+
+            // Button Apply (Lamar via WA)
+            const msg = `Halo HRD ${job.company}, saya tertarik melamar posisi *${job.title}*. Info dari LokerKita.`;
+            document.getElementById('applyBtn').href = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+        }
+
+        function showError() {
+            document.getElementById('loadingState').classList.add('hidden');
+            document.getElementById('errorState').classList.remove('hidden');
+        }
+
+        // --- NEW SHARE FUNCTIONS ---
+
+        function shareJob(event) {
+            const dummy = document.createElement('input');
+            document.body.appendChild(dummy);
+            dummy.value = window.location.href;
+            dummy.select();
+            try {
+                document.execCommand('copy');
+                const btn = event.currentTarget;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check text-green-500"></i> Tersalin!';
+                setTimeout(() => btn.innerHTML = originalText, 2000);
+            } catch (e) {
+                alert("Gagal menyalin link.");
+            }
+            document.body.removeChild(dummy);
+        }
+
+        function shareToWa() {
+            const title = document.getElementById('dTitle').innerText;
+            const company = document.getElementById('dCompany').innerText;
+            const url = window.location.href;
+            const text = `Ada lowongan *${title}* di *${company}*. Cek detailnya di sini: ${url}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function shareToFb() {
+            const url = window.location.href;
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+        }
+
+        // Logic Dropdown (Visual Saja di halaman Detail)
+        function toggleDropdown(type) {
+            const menu = document.getElementById(type + 'Menu');
+            const chevron = document.getElementById(type + 'Chevron');
+            const container = document.getElementById(type + 'Container');
+            
+            if(type === 'category') closeDropdown('location');
+            if(type === 'location') closeDropdown('category');
+
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                requestAnimationFrame(() => {
+                    menu.classList.add('dropdown-enter-active');
+                    menu.classList.remove('dropdown-enter');
+                });
+                chevron.style.transform = 'rotate(180deg)';
+                container.classList.add('border-brand-500');
+            } else {
+                closeDropdown(type);
+            }
+        }
+
+        function closeDropdown(type) {
+            const menu = document.getElementById(type + 'Menu');
+            const chevron = document.getElementById(type + 'Chevron');
+            const container = document.getElementById(type + 'Container');
+            if (!menu.classList.contains('hidden')) {
+                menu.classList.add('dropdown-exit-active');
+                setTimeout(() => {
+                    menu.classList.add('hidden');
+                    menu.classList.remove('dropdown-exit-active', 'dropdown-enter-active');
+                    menu.classList.add('dropdown-enter');
+                }, 150);
+                chevron.style.transform = 'rotate(0deg)';
+                container.classList.remove('border-brand-500');
+            }
+        }
+
+        function closeAllDropdowns(event) {
+            if (!event.target.closest('.dropdown-container')) {
+                closeDropdown('category');
+                closeDropdown('location');
+            }
+        }
+        
+        function selectOption(type, label) {
+            document.getElementById(type + 'Display').innerText = label;
+            closeDropdown(type);
+        }
+    </script>
+</body>
+</html>
